@@ -1,52 +1,53 @@
-// Obtener los elementos del DOM
-const listaAmigos = document.getElementById("listaAmigos");
+// El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. Aquí deberás desarrollar la lógica para resolver el problema.
+// Referencias a los elementos del DOM
+const addButton = document.getElementById("addButton");
+const sortButton = document.getElementById("sortButton");
+const nombreInput = document.getElementById("nombreInput");
+const nombresList = document.getElementById("nombresList");
 const resultado = document.getElementById("resultado");
-const amigoInput = document.getElementById("amigo");
+const amigo = document.getElementById("amigo");
 
-// Crear un arreglo para almacenar los nombres
-let amigos = [];
+// Arreglo para almacenar los nombres de los amigos
+let nombres = [];
 
-// Función para agregar un nombre
-function agregarAmigo() {
-    const nombre = amigoInput.value.trim();
+addButton.addEventListener("click", () => {
+  const nombre = nombreInput.value.trim();
+  
+  // Validar si el campo está vacío
+  if (nombre === "") {
+    alert("Por favor, ingresa un nombre válido.");
+    return;
+  }
 
-    // Validar si el campo está vacío
-    if (nombre === "") {
-        alert("Por favor, ingresa un nombre válido.");
-        return;
-    }
+  // Agregar el nombre a la lista
+  nombres.push(nombre);
+  nombreInput.value = "";  // Limpiar el campo de entrada
+  
+  // Mostrar la lista de nombres en la página
+  updateLista();
+});
 
-    // Agregar el nombre al arreglo y actualizar la lista visible
-    amigos.push(nombre);
-    amigoInput.value = "";  // Limpiar el campo de texto
-
-    // Actualizar la lista de amigos
-    actualizarLista();
-}
-
-// Función para actualizar la lista de amigos
-function actualizarLista() {
-    // Limpiar la lista actual
-    listaAmigos.innerHTML = "";
-
-    // Crear un nuevo elemento de lista por cada amigo
-    amigos.forEach((amigo, index) => {
-        const li = document.createElement("li");
-        li.textContent = amigo;
-        listaAmigos.appendChild(li);
-    });
+// Función para actualizar la lista de nombres
+function updateLista() {
+  nombresList.innerHTML = "";
+  nombres.forEach((nombre) => {
+    const li = document.createElement("li");
+    li.textContent = nombre;
+    nombresList.appendChild(li);
+  });
 }
 
 // Función para sortear un amigo secreto
-function sortearAmigo() {
-    if (amigos.length === 0) {
-        alert("La lista de amigos está vacía. Agrega nombres antes de sortear.");
-        return;
-    }
+sortButton.addEventListener("click", () => {
+  if (nombres.length === 0) {
+    alert("La lista de amigos está vacía. Agrega nombres antes de sortear.");
+    return;
+  }
 
-    // Seleccionar un amigo aleatorio
-    const amigoSorteado = amigos[Math.floor(Math.random() * amigos.length)];
-
-    // Mostrar el resultado
-    resultado.innerHTML = `El amigo secreto sorteado es: <span>${amigoSorteado}</span>`;
-}
+  // Seleccionar un amigo aleatorio
+  const amigoSorteado = nombres[Math.floor(Math.random() * nombres.length)];
+  
+  // Mostrar el resultado
+  amigo.textContent = amigoSorteado;
+  resultado.classList.remove("hidden");
+});
